@@ -1,0 +1,55 @@
+/**
+ * Badge rendered from the data attribute added via `editor.BlockListBlock`.
+ *
+ * Using a pseudo-element keeps the badge out of the block's editable DOM, so
+ * it can never end up in the saved title. `user-select` / `pointer-events` are
+ * disabled so it is not selectable or clickable inside the contenteditable.
+ */
+.wp-block-post-title.has-title-word-count {
+	position: relative;
+}
+
+.wp-block-post-title.has-title-word-count::after {
+	content: attr( data-title-word-count );
+	position: absolute;
+	inset-inline-end: 0;
+	top: -1.6em;
+	padding: 2px 8px;
+	border-radius: 2px;
+	background: var( --wp-admin-theme-color, #3858e9 );
+	color: #fff;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	pointer-events: none;
+	user-select: none;
+	opacity: 0;
+	transition: opacity 0.12s ease-in-out;
+}
+
+/* Only reveal the badge while the title block is selected or hovered. */
+.wp-block-post-title.has-title-word-count.is-selected::after,
+.wp-block-post-title.has-title-word-count.is-hovered::after,
+.wp-block-post-title.has-title-word-count:hover::after {
+	opacity: 1;
+}
+
+.title-word-count__stats {
+	display: grid;
+	gap: 4px;
+	width: 100%;
+}
+
+.title-word-count__stat {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.title-word-count__stat-value {
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+}
