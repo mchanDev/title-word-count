@@ -1,8 +1,18 @@
 /**
- * Badge rendered from the data attribute added via `editor.BlockListBlock`.
+ * Badge rendered from the `data-title-word-count` attribute the editor script
+ * writes onto the title node.
  *
- * Using a pseudo-element keeps the badge out of the block's editable DOM, so
- * it can never end up in the saved title. `user-select` / `pointer-events` are
+ * The selector matches both things that carry `wp-block-post-title`:
+ *   - the `core/post-title` block wrapper (site editor, template editor, Query
+ *     Loop), and
+ *   - the post editor's title field, which is not a block but borrows the same
+ *     class name.
+ *
+ * Both live inside the iframed editor canvas, so these rules are enqueued on
+ * `enqueue_block_assets` — see title-word-count.php.
+ *
+ * Using a pseudo-element keeps the badge out of the editable DOM, so it can
+ * never end up in the saved title. `user-select` / `pointer-events` are
  * disabled so it is not selectable or clickable inside the contenteditable.
  */
 .wp-block-post-title.has-title-word-count {
